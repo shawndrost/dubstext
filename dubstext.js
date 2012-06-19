@@ -39,11 +39,11 @@ if (Meteor.is_client) {
 
 
   //newnoise events
+  clickCanceler = function(e) { return false; }
   Template.newNoise.events = {
-    'click #text' : function(e) { return false; },
-    'click #speed' : function(e) { return false; },
-    'click #submit' : function(e) {
-      Noises.insert({text: $("#text").val(), speed: $("#speed").val(), x: this.x, y: this.y })
+    'click .bordered' : clickCanceler,
+    'click #submit'   : function(e) {
+      Noises.insert({text: $("#text").val(), speed: $("#speed").val(), size: $("#size").val(), x: this.x, y: this.y })
       Session.set("newNoise", undefined);
       return false;
     }
@@ -54,6 +54,6 @@ if (Meteor.is_server) {
   Meteor.startup(function () {
     // delete everything and add a noise to start with
     Noises.remove({});
-    Noises.insert({text: "doop", x: 300, y: 200, speed: 200});
+    Noises.insert({text: "doop", x: 300, y: 200, speed: 200, size: 20});
   });
 }
