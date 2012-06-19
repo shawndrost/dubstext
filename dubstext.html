@@ -24,11 +24,12 @@
     ONOMONOPAEIA: <input id="text" /><br>
     BLINKINESS: <input id="speed" value="200" /><br>
     BIGNESS: <input id="size" value="20" /><br>
+    COLORIFICATION: <input id="color" value="aaaaaa" /><br>
     <center><input id="submit" type="submit" value="add dubsteb noise" /></center>
   </span>
 </template>
 <template name="noise">
-  <span class="blinky blinky-{{speed}} absolute" style="left:{{x}}px;top:{{y}}px;font-size:{{size}}px">
+  <span class="blinky blinky-{{speed}} absolute" style="left:{{x}}px;top:{{y}}px;font-size:{{size}}px;color:#{{color}}">
     {{text}}
   </span>
 </template>
