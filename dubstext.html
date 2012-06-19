@@ -7,9 +7,23 @@
 </body>
 
 <template name="noises">
-  {{#each allNoises}}
-    {{> noise}}
-  {{/each}}
+  <div id="container">
+    {{#each allNoises}}
+      {{> noise}}
+    {{/each}}
+
+    {{#if newNoise}}
+      {{#with newNoise}}
+        {{> newNoise}}
+      {{/with}}
+    {{/if}}
+  </div>
+</template>
+<template name="newNoise">
+  <span class="bordered absolute" style="left:{{x}}px;top:{{y}}px">
+    text: <input id="text" /><br>
+    <center><input id="submit" type="submit" value="add dubsteb noise" /></center>
+  </span>
 </template>
 <template name="noise">
   <span class="blinky absolute" style="left:{{x}}px;top:{{y}}px">

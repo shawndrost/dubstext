@@ -6,8 +6,30 @@ if (Meteor.is_client) {
   function blinkit(){ $(".blinky").toggle() }
   setInterval(blinkit, 200);
 
+
+  //allnoise helpers/events
   Template.noises.allNoises = function () {
     return Noises.find({});
+  }
+  Template.noises.newNoise = function () {
+    return Session.get("newNoise")
+  }
+  Template.noises.events = {
+    'click #container' : function (e) {
+      Session.set("newNoise", {x: e.x, y: e.y})
+    }
+  };
+  //end of allnoise helpers/events
+
+
+  //newnoise events
+  Template.newNoise.events = {
+    'click #text' : function(e) { return false; },
+    'click #submit' : function(e) {
+      Noises.insert({text: $("#text").val(), x: this.x, y: this.y })
+      Session.set("newNoise", undefined);
+      return false;
+    }
   }
 }
 

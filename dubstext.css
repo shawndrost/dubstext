@@ -1,3 +1,4 @@
 /* CSS declarations go here */
-html, body{height:100%;width:100%;}
+html, body, #container{height:100%;width:100%;}
 .absolute{position:absolute;}
+.bordered{border:1px solid black; padding:3px;}
