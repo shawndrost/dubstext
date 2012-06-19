@@ -9,7 +9,15 @@ if (Meteor.is_client) {
     }, speed);
   }
 
-  //allnoise helpers/events
+  //'noise' events
+  Template.noise.events = {
+    "click .blinky": function(){
+      console.log("asdf")
+      Noises.remove({_id: this._id})
+    }
+  }  
+
+  //'allnoise' helpers/events
   intervalIds = []
   setupBlinks = function (noises) {
     var existingIntervals = [];
@@ -35,10 +43,10 @@ if (Meteor.is_client) {
       Session.set("newNoise", {x: e.x, y: e.y})
     }
   };
-  //end of allnoise helpers/events
+  //end of 'allnoise' helpers/events
 
 
-  //newnoise events
+  //'newnoise' events
   clickCanceler = function(e) { return false; }
   Template.newNoise.events = {
     'click .bordered' : clickCanceler,
@@ -48,6 +56,7 @@ if (Meteor.is_client) {
       return false;
     }
   }
+
 }
 
 if (Meteor.is_server) {
