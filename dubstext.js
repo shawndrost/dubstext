@@ -1,19 +1,20 @@
-if (Meteor.is_client) {
-  Template.hello.greeting = function () {
-    return "Welcome to dubstext.";
-  };
+Noises = new Meteor.Collection("noises");
 
-  Template.hello.events = {
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  };
+if (Meteor.is_client) {
+
+  //makes blinky things blink
+  function blinkit(){ $(".blinky").toggle() }
+  setInterval(blinkit, 200);
+
+  Template.noises.allNoises = function () {
+    return Noises.find({});
+  }
 }
 
 if (Meteor.is_server) {
   Meteor.startup(function () {
-    // code to run on server at startup
+    // delete everything and add a noise to start with
+    Noises.remove({});
+    Noises.insert({text: "doop", x: 300, y: 200});
   });
 }
