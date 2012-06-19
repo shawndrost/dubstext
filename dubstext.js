@@ -3,13 +3,29 @@ Noises = new Meteor.Collection("noises");
 if (Meteor.is_client) {
 
   //makes blinky things blink
-  function blinkit(){ $(".blinky").toggle() }
-  setInterval(blinkit, 200);
-
+  function setBlinkIntervalForSpeed(speed){ 
+    return setInterval(function(){
+      $(".blinky-" + speed).toggle()
+    }, speed);
+  }
 
   //allnoise helpers/events
+  intervalIds = []
+  setupBlinks = function (noises) {
+    var existingIntervals = [];
+    _.each(intervalIds, function(id){ clearInterval(id) })
+    noises.forEach(function(noise){
+      if(!existingIntervals[noise.speed]){
+        existingIntervals[noise.speed] = true
+        id = setBlinkIntervalForSpeed(noise.speed)
+        intervalIds.push(id);
+      }
+    })
+  }
   Template.noises.allNoises = function () {
-    return Noises.find({});
+    var noises = Noises.find({});
+    setupBlinks(noises); //janky rerender listener
+    return noises;
   }
   Template.noises.newNoise = function () {
     return Session.get("newNoise")
@@ -25,8 +41,9 @@ if (Meteor.is_client) {
   //newnoise events
   Template.newNoise.events = {
     'click #text' : function(e) { return false; },
+    'click #speed' : function(e) { return false; },
     'click #submit' : function(e) {
-      Noises.insert({text: $("#text").val(), x: this.x, y: this.y })
+      Noises.insert({text: $("#text").val(), speed: $("#speed").val(), x: this.x, y: this.y })
       Session.set("newNoise", undefined);
       return false;
     }
@@ -37,6 +54,6 @@ if (Meteor.is_server) {
   Meteor.startup(function () {
     // delete everything and add a noise to start with
     Noises.remove({});
-    Noises.insert({text: "doop", x: 300, y: 200});
+    Noises.insert({text: "doop", x: 300, y: 200, speed: 200});
   });
 }

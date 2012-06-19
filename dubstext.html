@@ -22,11 +22,12 @@
 <template name="newNoise">
   <span class="bordered absolute" style="left:{{x}}px;top:{{y}}px">
     text: <input id="text" /><br>
+    speed: <input id="speed" value="200" /><br>
     <center><input id="submit" type="submit" value="add dubsteb noise" /></center>
   </span>
 </template>
 <template name="noise">
-  <span class="blinky absolute" style="left:{{x}}px;top:{{y}}px">
+  <span class="blinky blinky-{{speed}} absolute" style="left:{{x}}px;top:{{y}}px">
     {{text}}
   </span>
 </template>
